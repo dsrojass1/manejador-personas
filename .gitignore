@@ -1,0 +1,5 @@
+# Ignore pycache
+__pycache__/
+
+# Ignore nombre_del_entorno
+nombre_del_entorno/
