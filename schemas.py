@@ -1,5 +1,6 @@
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr, Field, SecretStr
 from typing import List, Optional
+from datetime import date
 
 class ClienteBase(BaseModel):
     nombre: str
@@ -12,16 +13,14 @@ class ClienteBase(BaseModel):
     telefono: str
     documento: str = Field(..., max_length=10)
     email: EmailStr
-    fecha_nacimiento: str
+    fecha_nacimiento: date
 
 class ClienteCreate(ClienteBase):
+    username: str
+    password: SecretStr
     pass
 
-class Cliente(ClienteBase):
-    id: int
 
-    class Config:
-        orm_mode: True
 
 class InformacionFinancieraBase(BaseModel):
     ingresos: float
@@ -38,7 +37,7 @@ class InformacionFinancieraBase(BaseModel):
     garantias: Optional[str] = None
     tipo_vivienda: str
     educacion: str
-    documento: str = Field(..., max_length=10)
+    #documento: str = Field(..., max_length=10)
     cliente_id: Optional[int] = None
 
 class InformacionFinancieraCreate(InformacionFinancieraBase):
@@ -46,6 +45,13 @@ class InformacionFinancieraCreate(InformacionFinancieraBase):
 
 class InformacionFinanciera(InformacionFinancieraBase):
     id: int
+
+    class Config:
+        orm_mode: True
+
+class Cliente(ClienteBase):
+    id: int
+    informacion_financiera: Optional[InformacionFinanciera] = None
 
     class Config:
         orm_mode: True

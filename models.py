@@ -41,7 +41,7 @@ class InformacionFinanciera(Base):
     garantias = Column(Text, nullable=True)
     tipo_vivienda = Column(String(100), nullable=False)
     educacion = Column(String(100), nullable=False)
-    documento = Column(String(10), nullable=False)
+    #documento = Column(String(10), nullable=False)
     cliente_id = Column(Integer, ForeignKey('cliente.id'), nullable=True)
 
     cliente = relationship("Cliente", back_populates="informacion_financiera")
